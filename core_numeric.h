@@ -25,7 +25,8 @@ namespace core_numeric {
     concept Divisible = requires(T a, size_t n) {
         { a / n } -> same_as<T>;
     };
-
+    // TAREA : Crear uno adicional y aplicarlo
+    // aca se cumple el primer punto
     template <typename T>
     concept Multipliable = requires(T a, T b) {
         { a * b } -> std::same_as<T>;
@@ -109,6 +110,31 @@ namespace core_numeric {
         }
         return result;
     }
+
+    // SUM VARIADIC (Fold expression unary left)
+    template <typename... Args>
+        requires (Addable<Args> && ...)
+    auto sum_variadic(Args... args) {
+        return (... + args);
+    }
+
+    // MEAN VARIADIC (Fold expression + Uso obligatorio de if constexpr)
+    template <typename... Args>
+        requires (Addable<Args> && ...)
+    auto mean_variadic(Args... args) {
+        static_assert(sizeof...(args) > 0, "Debe pasar al menos un argumento.");
+    
+        using CommonType = std::common_type_t<Args...>;
+        auto total = sum_variadic(args...);
+
+        // Se diferencia el comportamiento en tiempo de compilación según el tipo
+        if constexpr (std::is_integral_v<CommonType>) {
+            return static_cast<double>(total) / sizeof...(args);
+        } else {
+            return total / static_cast<CommonType>(sizeof...(args));
+        }
+    }
+
 
 }
 

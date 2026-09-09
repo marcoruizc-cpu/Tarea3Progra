@@ -38,7 +38,7 @@ namespace core_numeric {
     template <typename T>
     concept Comparable = requires(T a, T b) {
         { a < b } -> convertible_to<bool>;
-    };
+    } && !Iterable<T>;
 
     template <typename T>
     concept Subtractable = requires(T a, T b) {

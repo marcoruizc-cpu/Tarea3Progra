@@ -123,7 +123,7 @@ namespace core_numeric {
         requires (Addable<Args> && ...)
     auto mean_variadic(Args... args) {
         static_assert(sizeof...(args) > 0, "Debe pasar al menos un argumento.");
-    
+
         using CommonType = std::common_type_t<Args...>;
         auto total = sum_variadic(args...);
 
@@ -133,6 +133,33 @@ namespace core_numeric {
         } else {
             return total / static_cast<CommonType>(sizeof...(args));
         }
+    }
+
+    // VARIANCE VARIADIC acopado con el multipliable
+    template <typename... Args>
+        requires (Addable<Args> && ...) && (Multipliable<Args> && ...)
+    auto variance_variadic(Args... args) {
+        static_assert(sizeof...(args) > 0, "Debe pasar al menos un argumento.");
+
+        auto m = mean_variadic(args...);
+        double sum_sq_diff = 0.0;
+
+        // Fold expression con operador coma para calcular diferencias al cuadrado
+        ((sum_sq_diff += (args - m) * (args - m)), ...);
+
+        return sum_sq_diff / sizeof...(args);
+    }
+
+    // MAX VARIADIC (Fold expression con operador ternario)
+    template <typename First, typename... Args>
+        requires (Comparable<First> && (Comparable<Args> && ...))
+    auto max_variadic(First first, Args... args) {
+        using Common = std::common_type_t<First, Args...>;
+        Common current_max = static_cast<Common>(first);
+
+        ((current_max = (static_cast<Common>(args) > current_max ? static_cast<Common>(args) : current_max)), ...);
+
+        return current_max;
     }
 
 

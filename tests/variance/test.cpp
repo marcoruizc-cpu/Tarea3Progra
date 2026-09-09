@@ -1,3 +1,13 @@
+// test.cpp - core_numeric::variance
+//
+// variance() esta restringida con Addable + Divisible + Multipliable
+// + Subtractable, y reutiliza mean(). El concept Subtractable se
+// agrego especificamente porque el cuerpo de variance() usa el
+// operador "-" (value - m) para las diferencias al cuadrado, y
+// ningun otro concept lo garantizaba: antes de agregarlo, un tipo sin
+// operator- pasaba el "requires" y fallaba mas adentro, con un error
+// de plantilla mucho menos claro que un rechazo limpio por concept.
+
 #include <iostream>
 #include <cstddef>
 #include <vector>
@@ -48,12 +58,11 @@ int main() {
     // std::vector<Coordenadas> puntos{{1.0, 2.0}, {3.0, 4.0}};
     // core_numeric::variance(puntos);
 
-    // SinResta SI cumple Addable + Divisible + Multipliable, asi que
-    // el "requires" de la firma la deja pasar. El error aparece mas
-    // adentro, en la linea "auto diff = value - m;" del cuerpo de
-    // variance(), porque SinResta no tiene operator-. Este es el
-    // hueco de diseño explicado arriba: el concept no protegio contra
-    // este caso.
+    // SinResta cumple Addable + Divisible + Multipliable, pero NO
+    // define operator- -> Subtractable<SinResta> es falso, y ahora el
+    // "requires" de la firma de variance() la rechaza de entrada,
+    // antes de llegar al cuerpo (a diferencia de antes de agregar
+    // Subtractable, cuando el error salia mas adentro).
     // std::vector<SinResta> datos{{1.0}, {2.0}, {3.0}};
     // core_numeric::variance(datos);
 

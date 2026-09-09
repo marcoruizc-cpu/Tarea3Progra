@@ -40,6 +40,11 @@ namespace core_numeric {
         { a < b } -> convertible_to<bool>;
     };
 
+    template <typename T>
+    concept Subtractable = requires(T a, T b) {
+        { a - b } -> std::same_as<T>;
+    };
+
     // ==========================================
     // 2. ALGORITMOS CONTENEDORES
     // ==========================================
@@ -67,7 +72,8 @@ namespace core_numeric {
     template <Iterable C>
         requires Addable<typename C::value_type> &&
                  Divisible<typename C::value_type> &&
-                 Multipliable<typename C::value_type>
+                 Multipliable<typename C::value_type> &&
+                 Subtractable<typename C::value_type>
     auto variance(const C& container) {
         if (container.empty()) return typename C::value_type{};
 

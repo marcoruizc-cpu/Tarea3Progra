@@ -19,6 +19,13 @@ int main() {
     // MAX
     std::cout << "max(doubles) = " << core_numeric::max(doubles) << '\n';
 
+    // TRANSFORM_REDUCE (promedio de x^2 sobre doubles, reutilizando mean)
+    auto mean_of_squares = core_numeric::transform_reduce(
+        doubles,
+        [](double x) { return x * x; }
+    );
+    std::cout << "transform_reduce(doubles, x^2) = " << mean_of_squares << '\n';
+
 
     // VARIADIC
     std::cout << "sum_variadic(1,2,33,4) = " << core_numeric::sum_variadic(1, 2, 33, 4) << '\n';

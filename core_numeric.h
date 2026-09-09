@@ -6,6 +6,8 @@
 #include <cstddef>
 #include <algorithm>
 #include <stdexcept>
+#include <vector>
+
 using namespace std;
 
 namespace core_numeric {
@@ -102,13 +104,18 @@ namespace core_numeric {
 
     // TRANSFORM_REDUCE
     // Transforma cada elemento aplicando una función (UnaryOp) y luego los reduce (combina) con otra (BinaryOp)
-    template <Iterable C, typename UnaryOp, typename BinaryOp, typename T>
-    auto transform_reduce(const C& container, T init, UnaryOp transform, BinaryOp reduce) {
-        T result = init;
+    template <Iterable C, typename UnaryOp>
+        requires Addable<typename C::value_type>
+    auto transform_reduce(const C& container, UnaryOp transform) {
+        using ResultType = decltype(transform(*std::begin(container)));
+
+        std::vector<ResultType> transformed;
+        transformed.reserve(container.size());
         for (const auto& value : container) {
-            result = reduce(result, transform(value));
+            transformed.push_back(transform(value));
         }
-        return result;
+
+        return mean(transformed);
     }
 
     // SUM VARIADIC (Fold expression unary left)

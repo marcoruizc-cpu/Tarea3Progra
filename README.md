@@ -4,6 +4,6 @@
 
 Reyes Juarez, Eli Bernie
 
-Marco SebastianRuiz Camarena
+SebastianRuiz Camarena, Marco
 
 Montes Quispe, Jhanpiere Alejandro

@@ -1,0 +1,16 @@
+# Carpetas de build de CMake/CLion
+cmake-build-*/
+build/
+
+# Configuración de CLion/IntelliJ (específica de tu máquina)
+.idea/
+
+# Binarios y objetos compilados
+*.o
+*.obj
+*.exe
+*.out
+*.exe.manifest
+
+# Otros
+*.log

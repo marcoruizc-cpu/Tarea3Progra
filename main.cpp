@@ -3,29 +3,28 @@
 #include "core_numeric.h"
 
 int main() {
-    std::vector<int> ints{1, 2, 3, 4, 5};
-    std::vector<double> doubles{1.0, 2.0, 3.0};
+    std::vector<int> muestra_enteros{1, 2, 3, 4, 5};
+    std::vector<double> datos{1.0, 2.0, 3.0};
 
     // SUM
-    std::cout << "sum(ints) = " << core_numeric::sum(ints) << '\n';
-    std::cout << "sum(doubles) = " << core_numeric::sum(doubles) << '\n';
+    std::cout << "sum(muestra_enteros) = " << core_numeric::sum(muestra_enteros) << '\n';
+    std::cout << "sum(datos) = " << core_numeric::sum(datos) << '\n';
 
     // MEAN
-    std::cout << "mean(doubles) = " << core_numeric::mean(doubles) << '\n';
+    std::cout << "mean(datos) = " << core_numeric::mean(datos) << '\n';
 
     // VARIANCE
-    std::cout << "variance(doubles) = " << core_numeric::variance(doubles) << '\n';
+    std::cout << "variance(datos) = " << core_numeric::variance(datos) << '\n';
 
     // MAX
-    std::cout << "max(doubles) = " << core_numeric::max(doubles) << '\n';
+    std::cout << "max(datos) = " << core_numeric::max(datos) << '\n';
 
     // TRANSFORM_REDUCE (promedio de x^2 sobre doubles, reutilizando mean)
     auto mean_of_squares = core_numeric::transform_reduce(
-        doubles,
+        datos,
         [](double x) { return x * x; }
     );
-    std::cout << "transform_reduce(doubles, x^2) = " << mean_of_squares << '\n';
-
+    std::cout << "transform_reduce(datos, x^2) = " << mean_of_squares << '\n';
 
     // VARIADIC
     std::cout << "sum_variadic(1,2,33,4) = " << core_numeric::sum_variadic(1, 2, 33, 4) << '\n';

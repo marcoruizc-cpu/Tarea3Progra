@@ -4,7 +4,7 @@
 
 int main() {
     std::vector<int> muestra_enteros{1, 2, 3, 4, 5};
-    std::vector<double> datos{1.0, 2.0, 3.0};
+    std::vector<double> datos{1.0, 2.0, 3.0, 4.0, 5.0};
 
     // SUM
     std::cout << "sum(muestra_enteros) = " << core_numeric::sum(muestra_enteros) << '\n';
